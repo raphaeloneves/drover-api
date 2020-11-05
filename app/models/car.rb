@@ -21,6 +21,7 @@ class Car < ApplicationRecord
   scope :by_color, ->(color) { where('color like ?', "%#{color}%") }
 
   # sorting
+  scope :sorting_default, -> { sorting_by_price('asc') }
   scope :sorting_by_price, ->(direction) { order("subscription_prices.price #{direction}") }
   scope :sorting_by_availability, ->(direction) { order(available_at: direction) }
   scope :sorting_by_color, ->(direction) { order(color: direction) }
