@@ -12,6 +12,15 @@
 
 ActiveRecord::Schema.define(version: 2020_10_29_081100) do
 
+  create_table "cars", force: :cascade do |t|
+    t.integer "model_id", null: false
+    t.integer "year", null: false
+    t.string "color", default: "white"
+    t.date "available_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "makers", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -27,13 +36,10 @@ ActiveRecord::Schema.define(version: 2020_10_29_081100) do
     t.index ["name", "maker_id"], name: "index_models_on_name_and_maker_id", unique: true
   end
 
-  create_table "cars", force: :cascade do |t|
-    t.integer "model_id", null: false
-    t.integer "year", null: false
-    t.string "color", default: "white"
-    t.date "available_at", null: false
+  create_table "subscription_prices", force: :cascade do |t|
+    t.decimal "price", null: false
+    t.integer "car_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
 end
