@@ -2,6 +2,7 @@
 
 class Car < ApplicationRecord
   extend Filterable
+  extend Sortable
 
   belongs_to :model, class_name: 'Model'
   has_one :subscription_price, class_name: 'SubscriptionPrice', dependent: :destroy
