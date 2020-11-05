@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 describe Car, type: :model do
+
+  it_behaves_like 'filterable'
+
   describe 'validations' do
     describe 'model' do
       it 'should be present' do
