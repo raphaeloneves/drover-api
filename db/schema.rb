@@ -19,4 +19,21 @@ ActiveRecord::Schema.define(version: 2020_10_29_081100) do
     t.index ["name"], name: "index_makers_on_name", unique: true
   end
 
+  create_table "models", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "maker_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name", "maker_id"], name: "index_models_on_name_and_maker_id", unique: true
+  end
+
+  create_table "cars", force: :cascade do |t|
+    t.integer "model_id", null: false
+    t.integer "year", null: false
+    t.string "color", default: "white"
+    t.date "available_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
 end
