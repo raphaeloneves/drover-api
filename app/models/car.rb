@@ -6,5 +6,6 @@ class Car < ApplicationRecord
 
   validates :model, :year, :available_at, presence: true
   validates :year, numericality: { greater_than_or_equal_to: 10.years.ago.year }
+  validates :available_at, past_date: true
 
 end
