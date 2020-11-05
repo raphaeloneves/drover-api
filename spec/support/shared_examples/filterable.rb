@@ -2,7 +2,7 @@
 
 RSpec.shared_examples 'filterable' do
   let(:clazz) { described_class }
-  it 'should act as filterable' do
-    clazz.should respond_to? :filtering_by
+  it 'should respond to sorting_by' do
+    expect(clazz.respond_to? :filtering_by).to be_truthy
   end
 end

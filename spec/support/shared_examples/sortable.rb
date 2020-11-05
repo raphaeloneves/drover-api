@@ -2,7 +2,7 @@
 
 RSpec.shared_examples 'sortable' do
   let(:clazz) { described_class }
-  it 'should act as sortable' do
-    clazz.should respond_to? :sorting_by
+  it 'should respond to sorting_by' do
+    expect(clazz.respond_to? :sorting_by).to be_truthy
   end
 end
