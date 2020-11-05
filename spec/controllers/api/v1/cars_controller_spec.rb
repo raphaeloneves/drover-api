@@ -53,7 +53,7 @@ describe Api::V1::CarsController, type: :controller, json: true do
         create(:subscription_price, price: 100.0, car_id: 2)
       end
 
-      describe 'limiting' do
+      describe 'for limiting' do
         let(:request_params) { { limit: 1 } }
         it 'should return a limited number of objects' do
           subject
@@ -62,7 +62,7 @@ describe Api::V1::CarsController, type: :controller, json: true do
         end
       end
 
-      describe 'filtering' do
+      describe 'for filtering' do
         describe 'by color' do
           let(:request_params) { { color: 'whiTe' } }
           it 'should filter the response by color (case insensitive)' do
@@ -87,6 +87,119 @@ describe Api::V1::CarsController, type: :controller, json: true do
             car = json.first
             maker = car['model']['maker']
             expect(maker['name']).to eq 'BMW'
+          end
+        end
+      end
+
+      describe 'for sorting' do
+        let(:request_params) { { sort: sorting_value, sort_dir: sorting_dir } }
+
+        context 'without specify the sorting direction' do
+          let(:sorting_value) { 'price' }
+          let(:sorting_dir) { nil }
+          it 'should sort in asc direction based on the sort target' do
+            subject
+            expect(json.size).to eq 2
+            expect(json.first['subscription_price']['price'].to_f).to eq 100.0
+            expect(json.last['subscription_price']['price'].to_f).to eq 200.0
+          end
+        end
+
+        context 'with direction' do
+          describe 'by year' do
+            let(:sorting_value) { 'year' }
+
+            context 'asc' do
+              let(:sorting_dir) { 'asc' }
+              it 'should sort year ASC' do
+                subject
+                expect(json.size).to eq 2
+                expect(json.first['year'].to_i).to eq 2018
+                expect(json.last['year'].to_i).to eq 2021
+              end
+            end
+
+            context 'desc' do
+              let(:sorting_dir) { 'desc' }
+              it 'should sort year DESC' do
+                subject
+                expect(json.size).to eq 2
+                expect(json.first['year'].to_i).to eq 2021
+                expect(json.last['year'].to_i).to eq 2018
+              end
+            end
+          end
+
+          describe 'by availability' do
+            let(:sorting_value) { 'availability' }
+
+            context 'asc' do
+              let(:sorting_dir) { 'asc' }
+              it 'should sort available_at ASC' do
+                subject
+                expect(json.size).to eq 2
+                expect(json.first['available_at'].to_date).to eq 1.day.after.to_date
+                expect(json.last['available_at'].to_date).to eq 3.days.after.to_date
+              end
+            end
+
+            context 'desc' do
+              let(:sorting_dir) { 'desc' }
+              it 'should sort available_at DESC' do
+                subject
+                expect(json.size).to eq 2
+                expect(json.first['available_at'].to_date).to eq 3.days.after.to_date
+                expect(json.last['available_at'].to_date).to eq 1.day.after.to_date
+              end
+            end
+          end
+
+          describe 'by price' do
+            let(:sorting_value) { 'price' }
+
+            context 'asc' do
+              let(:sorting_dir) { 'asc' }
+              it 'should sort subscription_price ASC' do
+                subject
+                expect(json.size).to eq 2
+                expect(json.first['subscription_price']['price'].to_f).to eq 100.0
+                expect(json.last['subscription_price']['price'].to_f).to eq 200.0
+              end
+            end
+
+            context 'desc' do
+              let(:sorting_dir) { 'desc' }
+              it 'should sort available_at DESC' do
+                subject
+                expect(json.size).to eq 2
+                expect(json.first['subscription_price']['price'].to_f).to eq 200.0
+                expect(json.last['subscription_price']['price'].to_f).to eq 100.0
+              end
+            end
+          end
+
+          describe 'by color' do
+            let(:sorting_value) { 'color' }
+
+            context 'asc' do
+              let(:sorting_dir) { 'asc' }
+              it 'should sort color ASC' do
+                subject
+                expect(json.size).to eq 2
+                expect(json.first['color']).to eq 'purple'
+                expect(json.last['color']).to eq 'white'
+              end
+            end
+
+            context 'desc' do
+              let(:sorting_dir) { 'desc' }
+              it 'should sort color DESC' do
+                subject
+                expect(json.size).to eq 2
+                expect(json.first['color']).to eq 'white'
+                expect(json.last['color']).to eq 'purple'
+              end
+            end
           end
         end
       end
