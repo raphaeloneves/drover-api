@@ -4,10 +4,13 @@ module Filterable
   extend ActiveSupport::Concern
 
   def filtering_by(filtering_params)
-    results = where(nil)
+    result = where(nil)
     filtering_params&.each do |key, value|
-      results = results.public_send("by_#{key}", value) if value.present?
+      method = "by_#{key}"
+      return result unless result.respond_to?(method)
+
+      result = result.public_send(method, value) if value.present?
     end
-    results
+    result
   end
 end
