@@ -1,0 +1,98 @@
+require:
+  - rubocop-rails
+  - rubocop-performance
+
+AllCops:
+  TargetRubyVersion: 2.6
+  Exclude:
+    - ".git/**/*"
+    - "node_modules/**/*"
+    - "client/**/*"
+    - "db/**/*"
+    - "app/assets/**/*"
+    - "public/**/*"
+    - "spec/simplecov_merger.rb"
+    - "spec/simplecov_transformer.rb"
+
+Style/Alias:
+  Enabled: true
+  EnforcedStyle: prefer_alias_method
+
+Style/Documentation:
+  Enabled: false
+
+Style/DocumentationMethod:
+  Enabled: false
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
+Style/MixinUsage:
+  Exclude:
+    - "spec/**/*"
+    - "bin/**/*"
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
+
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+Metrics/AbcSize:
+  Max: 20
+
+Metrics/ClassLength:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 128
+  AutoCorrect: true
+  Exclude:
+    - "spec/**/*_spec.rb"
+
+Metrics/MethodLength:
+  Max: 30
+
+Metrics/ParameterLists:
+  CountKeywordArgs: false
+
+Gemspec/OrderedDependencies:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - "app/admin/*.rb"
+    - "spec/**/*_spec.rb"
+    - "spec/*_helper.rb"
+    - "spec/shared/**/*.rb"
+    - "spec/factories/**/*.rb"
+    - "lib/tasks/**/*.rake"
+    - "config/environments/*.rb"
+    - "config/routes.rb"
+    - "bin/*.rb"
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: nested
+  AutoCorrect: true
+  Exclude:
+    - "spec/**/*.rb"
+    - "config/environments/development.rb"
+    - "config/environments/production.rb"
+    - "config/environments/test.rb"
+
+Rails/FilePath:
+  EnforcedStyle: arguments
