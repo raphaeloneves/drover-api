@@ -8,4 +8,7 @@ class Car < ApplicationRecord
   validates :year, numericality: { greater_than_or_equal_to: 10.years.ago.year }
   validates :available_at, past_date: true
 
+  scope :available, -> { where('available_at <= ?', 3.months.after.to_date) }
+  scope :limiting_by, ->(limit) { limit(limit) }
+
 end
