@@ -205,4 +205,41 @@ describe Api::V1::CarsController, type: :controller, json: true do
       end
     end
   end
+
+  describe '#update' do
+    subject { put :update, params: updating_params }
+    before :each do
+      @car = create(:car, :available, id: 45, color: 'white', year: 2020)
+    end
+    let(:updating_params) do
+      { id: 45, year: 2015, color: 'black' }
+    end
+
+    it 'should update the car' do
+      subject
+      should have_http_status(204)
+      car = Car.find(45)
+      expect(car['color']).to eq 'black'
+      expect(car['year'].to_i).to eq 2015
+    end
+
+    context 'when the provided ID does not exist' do
+      before { updating_params['id'] = 1000 }
+      it 'should raise not found' do
+        subject
+        should have_http_status(404)
+        expect(json['error']).to be_present
+      end
+    end
+
+    context 'and it has an invalid parameter' do
+      before { updating_params[:year] = 1990 }
+
+      it 'should raise unprocessed entity' do
+        subject
+        expect(json['error']).to be_present
+        should have_http_status(422)
+      end
+    end
+  end
 end
