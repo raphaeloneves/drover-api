@@ -3,7 +3,7 @@
 class Car < ApplicationRecord
   extend Filterable
   extend Sortable
-  extend Pageable
+  extend Paginatable
 
   belongs_to :model, class_name: 'Model'
   has_one :subscription_price, class_name: 'SubscriptionPrice', dependent: :destroy

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Pageable
+module Paginatable
   extend ActiveSupport::Concern
 
   PAGE_LIMIT = 20
