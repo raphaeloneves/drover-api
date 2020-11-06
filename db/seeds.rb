@@ -12,7 +12,7 @@ models << Model.create!(name: 'X1', maker: bmw)
 models << Model.create!(name: 'Megane', maker: renault)
 models << Model.create!(name: 'Clio', maker: renault)
 
-25.times do
+100.times do
   car = Car.create!(
     model: models.sample, year: Faker::Number.between(from: 2010, to: Time.zone.today.year),
     color: Faker::Color.color_name,
