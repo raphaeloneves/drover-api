@@ -12,6 +12,10 @@ module Api
       def update
         render json: car.update!(updating_params), status: :no_content
       end
+
+      def create
+        render json: Car.create!(creating_params), status: :created
+      end
     end
   end
 end

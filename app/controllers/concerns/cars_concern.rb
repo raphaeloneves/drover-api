@@ -27,4 +27,15 @@ module CarsConcern
     @updating_params ||= params.permit(:id, :model_id, :year, :color, :available_at)
   end
 
+  def creating_params
+    params.require(:car).permit(
+      :model_id, :year, :color, :available_at,
+      subscription_price_attributes: %i[price]
+    ).tap do |params|
+      params.require(:subscription_price_attributes)
+      params.require(:model_id)
+      params.require(:year)
+      params.require(:available_at)
+    end
+  end
 end
