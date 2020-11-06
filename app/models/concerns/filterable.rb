@@ -6,10 +6,12 @@ module Filterable
   def filtering_by(filtering_params)
     result = where(nil)
     filtering_params&.each do |key, value|
+      next if value.blank?
+
       method = "by_#{key}"
       return result unless result.respond_to?(method)
 
-      result = result.public_send(method, value) if value.present?
+      result = result.public_send(method, value)
     end
     result
   end
