@@ -5,12 +5,14 @@
 
 ## Project Structure
 
-The initial structure for this project has been created from [my blueprint](https://github.com/raphaeloneves/rails-scaffold)
+The initial structure for this project has been created from [my rails blueprint](https://github.com/raphaeloneves/rails-scaffold)
 
 ## Extra dependencies added to the project
 ```
-gem 'active_model_serializers' -- scopes: root
-gem 'rswag' -- scopes: root
+gem 'active_model_serializers', '0.10.0' -- scopes: global
+gem 'rswag' -- scopes: global
+gem 'kaminari' -- scopes: global
+
 
 gem 'pry-byebug' -- scopes: development and test
 gem 'rspec-its' -- scopes: development and test
@@ -68,15 +70,15 @@ rails s -p 3000 -b '0.0.0.0'
 docker-compose up
 ```
 
-#### Note
-
-Database setup, migrations and seed have been configured on the `docker-entrypoint.sh` file.
-
 ## Accessing the endpoints
 
-### Base URL
+### Host
 
-`localhost:3000/api/v1`
+`localhost:3000`
+
+### Base URI
+
+`/api/v1`
 
 ### Resources
 
@@ -84,7 +86,7 @@ Database setup, migrations and seed have been configured on the `docker-entrypoi
 swagger/v1/swagger.yaml
 ```
 
-To access the endpoint live documentation, run the project locally or via Docker, and access the [swagger-ui](http://localhost:3000/api-docs) page.
+You can access a live documentation after running the project and accessing the [swagger-ui](http://localhost:3000/api-docs) page.
 
 ## Test suite
 
