@@ -1,0 +1,8 @@
+.git
+tmp
+log
+public/coverage/**
+**/*.md
+db/*.sqlite3
+.idea/*
+.byebug_history
