@@ -6,7 +6,7 @@ module Api
       include CarsConcern
 
       def index
-        render json: cars
+        render json: cars, meta: pagination_meta(cars)
       end
 
       def update

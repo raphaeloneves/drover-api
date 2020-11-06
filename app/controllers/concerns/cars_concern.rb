@@ -8,7 +8,7 @@ module CarsConcern
       sorting_by(sorting_params).
       filtering_by(filtering_params).
       includes({ model: :maker }, :subscription_price).
-      limiting_by(params[:limit])
+      paginate_by(paginate_param)
   end
 
   def car
@@ -37,5 +37,9 @@ module CarsConcern
       params.require(:year)
       params.require(:available_at)
     end
+  end
+
+  def paginate_param
+    params.permit(:page, :limit)
   end
 end
