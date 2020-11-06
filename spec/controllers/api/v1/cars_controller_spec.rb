@@ -7,6 +7,8 @@ describe Api::V1::CarsController, type: :controller, json: true do
     subject { get :index, params: request_params }
     let(:request_params) { {} }
 
+    it_behaves_like 'paginatable_response'
+
     it 'should return HTTP 200' do
       subject
       expect(response).to have_http_status(200)
@@ -242,4 +244,6 @@ describe Api::V1::CarsController, type: :controller, json: true do
       end
     end
   end
+
+
 end

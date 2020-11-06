@@ -4,6 +4,7 @@ describe Car, type: :model do
 
   it_behaves_like 'filterable'
   it_behaves_like 'sortable'
+  it_behaves_like 'paginatable'
 
   describe 'validations' do
     describe 'model' do
