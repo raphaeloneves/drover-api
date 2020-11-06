@@ -19,15 +19,15 @@ describe Api::V1::CarsController, type: :controller, json: true do
         end
         it 'should return an empty array' do
           subject
-          expect(json).to be_empty
+          expect(json['cars']).to be_empty
         end
       end
       context 'and there are available cars' do
         before { create(:car, :available) }
         it 'should return an empty array' do
           subject
-          expect(json).not_to be_nil
-          expect(json.size).to eq 1
+          expect(json['cars']).not_to be_nil
+          expect(json['cars'].size).to eq 1
         end
       end
       context 'and there are available cars and cars with availability date greater than three months' do
@@ -37,8 +37,8 @@ describe Api::V1::CarsController, type: :controller, json: true do
         end
         it 'should return only the available cars' do
           subject
-          expect(json.size).to eq 1
-          car = json.first
+          expect(json['cars'].size).to eq 1
+          car = json['cars'].first
           date = Date.parse(car['available_at'])
           expect(date.past?).to be_falsey
         end
@@ -58,7 +58,7 @@ describe Api::V1::CarsController, type: :controller, json: true do
         it 'should return a limited number of objects' do
           subject
           expect(Car.count).to eq 2
-          expect(json.size).to be 1
+          expect(json['cars'].size).to be 1
         end
       end
 
@@ -68,8 +68,8 @@ describe Api::V1::CarsController, type: :controller, json: true do
           it 'should filter the response by color (case insensitive)' do
             subject
             expect(Car.count).to eq 2
-            expect(json.count).to eq 1
-            expect(json.first['color']).to eq 'white'
+            expect(json['cars'].count).to eq 1
+            expect(json['cars'].first['color']).to eq 'white'
           end
         end
 
@@ -83,10 +83,10 @@ describe Api::V1::CarsController, type: :controller, json: true do
           it 'should filter the response by maker name (case insensitive)' do
             subject
             expect(Car.count).to eq 3
-            expect(json.count).to eq 1
-            car = json.first
-            maker = car['model']['maker']
-            expect(maker['name']).to eq 'BMW'
+            expect(json['cars'].count).to eq 1
+            car = json['cars'].first
+            maker = car['model']['maker_name']
+            expect(maker).to eq 'BMW'
           end
         end
       end
@@ -99,9 +99,9 @@ describe Api::V1::CarsController, type: :controller, json: true do
           let(:sorting_dir) { nil }
           it 'should sort in asc direction based on the sort target' do
             subject
-            expect(json.size).to eq 2
-            expect(json.first['subscription_price']['price'].to_f).to eq 100.0
-            expect(json.last['subscription_price']['price'].to_f).to eq 200.0
+            expect(json['cars'].size).to eq 2
+            expect(json['cars'].first['subscription_price']['price'].to_f).to eq 100.0
+            expect(json['cars'].last['subscription_price']['price'].to_f).to eq 200.0
           end
         end
 
@@ -113,9 +113,9 @@ describe Api::V1::CarsController, type: :controller, json: true do
               let(:sorting_dir) { 'asc' }
               it 'should sort year ASC' do
                 subject
-                expect(json.size).to eq 2
-                expect(json.first['year'].to_i).to eq 2018
-                expect(json.last['year'].to_i).to eq 2021
+                expect(json['cars'].size).to eq 2
+                expect(json['cars'].first['year'].to_i).to eq 2018
+                expect(json['cars'].last['year'].to_i).to eq 2021
               end
             end
 
@@ -123,9 +123,9 @@ describe Api::V1::CarsController, type: :controller, json: true do
               let(:sorting_dir) { 'desc' }
               it 'should sort year DESC' do
                 subject
-                expect(json.size).to eq 2
-                expect(json.first['year'].to_i).to eq 2021
-                expect(json.last['year'].to_i).to eq 2018
+                expect(json['cars'].size).to eq 2
+                expect(json['cars'].first['year'].to_i).to eq 2021
+                expect(json['cars'].last['year'].to_i).to eq 2018
               end
             end
           end
@@ -137,9 +137,9 @@ describe Api::V1::CarsController, type: :controller, json: true do
               let(:sorting_dir) { 'asc' }
               it 'should sort available_at ASC' do
                 subject
-                expect(json.size).to eq 2
-                expect(json.first['available_at'].to_date).to eq 1.day.after.to_date
-                expect(json.last['available_at'].to_date).to eq 3.days.after.to_date
+                expect(json['cars'].size).to eq 2
+                expect(json['cars'].first['available_at'].to_date).to eq 1.day.after.to_date
+                expect(json['cars'].last['available_at'].to_date).to eq 3.days.after.to_date
               end
             end
 
@@ -147,9 +147,9 @@ describe Api::V1::CarsController, type: :controller, json: true do
               let(:sorting_dir) { 'desc' }
               it 'should sort available_at DESC' do
                 subject
-                expect(json.size).to eq 2
-                expect(json.first['available_at'].to_date).to eq 3.days.after.to_date
-                expect(json.last['available_at'].to_date).to eq 1.day.after.to_date
+                expect(json['cars'].size).to eq 2
+                expect(json['cars'].first['available_at'].to_date).to eq 3.days.after.to_date
+                expect(json['cars'].last['available_at'].to_date).to eq 1.day.after.to_date
               end
             end
           end
@@ -161,9 +161,9 @@ describe Api::V1::CarsController, type: :controller, json: true do
               let(:sorting_dir) { 'asc' }
               it 'should sort subscription_price ASC' do
                 subject
-                expect(json.size).to eq 2
-                expect(json.first['subscription_price']['price'].to_f).to eq 100.0
-                expect(json.last['subscription_price']['price'].to_f).to eq 200.0
+                expect(json['cars'].size).to eq 2
+                expect(json['cars'].first['subscription_price']['price'].to_f).to eq 100.0
+                expect(json['cars'].last['subscription_price']['price'].to_f).to eq 200.0
               end
             end
 
@@ -171,9 +171,9 @@ describe Api::V1::CarsController, type: :controller, json: true do
               let(:sorting_dir) { 'desc' }
               it 'should sort available_at DESC' do
                 subject
-                expect(json.size).to eq 2
-                expect(json.first['subscription_price']['price'].to_f).to eq 200.0
-                expect(json.last['subscription_price']['price'].to_f).to eq 100.0
+                expect(json['cars'].size).to eq 2
+                expect(json['cars'].first['subscription_price']['price'].to_f).to eq 200.0
+                expect(json['cars'].last['subscription_price']['price'].to_f).to eq 100.0
               end
             end
           end
@@ -185,9 +185,9 @@ describe Api::V1::CarsController, type: :controller, json: true do
               let(:sorting_dir) { 'asc' }
               it 'should sort color ASC' do
                 subject
-                expect(json.size).to eq 2
-                expect(json.first['color']).to eq 'purple'
-                expect(json.last['color']).to eq 'white'
+                expect(json['cars'].size).to eq 2
+                expect(json['cars'].first['color']).to eq 'purple'
+                expect(json['cars'].last['color']).to eq 'white'
               end
             end
 
@@ -195,9 +195,9 @@ describe Api::V1::CarsController, type: :controller, json: true do
               let(:sorting_dir) { 'desc' }
               it 'should sort color DESC' do
                 subject
-                expect(json.size).to eq 2
-                expect(json.first['color']).to eq 'white'
-                expect(json.last['color']).to eq 'purple'
+                expect(json['cars'].size).to eq 2
+                expect(json['cars'].first['color']).to eq 'white'
+                expect(json['cars'].last['color']).to eq 'purple'
               end
             end
           end
@@ -228,7 +228,7 @@ describe Api::V1::CarsController, type: :controller, json: true do
       it 'should raise not found' do
         subject
         should have_http_status(404)
-        expect(json['error']).to be_present
+        expect(['error']).to be_present
       end
     end
 
@@ -237,7 +237,7 @@ describe Api::V1::CarsController, type: :controller, json: true do
 
       it 'should raise unprocessed entity' do
         subject
-        expect(json['error']).to be_present
+        expect(['error']).to be_present
         should have_http_status(422)
       end
     end
