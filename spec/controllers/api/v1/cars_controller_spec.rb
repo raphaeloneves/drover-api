@@ -245,5 +245,48 @@ describe Api::V1::CarsController, type: :controller, json: true do
     end
   end
 
+  describe '#create' do
+    subject { post :create, params: creating_params }
+    before :each do
+      create(:model, id: 1)
+    end
 
+    let(:creating_params) do
+      {
+        car: {
+          year: 2020, color: 'white',
+          available_at: Time.zone.today, model_id: 1,
+          subscription_price_attributes: { price: 99.99 }
+        }
+      }
+    end
+
+    it 'should create a new car' do
+      subject
+      should have_http_status(201)
+      expect(json['car']['id']).to be_present
+    end
+
+    describe 'when the payload is invalid' do
+      context 'and is missing a required parameter' do
+        before { creating_params.delete(:car) }
+
+        it 'should raise bad request' do
+          subject
+          expect(json['error']).to be_present
+          should have_http_status(400)
+        end
+      end
+
+      context 'and it has an invalid parameter' do
+        before { creating_params[:car][:year] = 1990 }
+
+        it 'should raise unprocessed entity' do
+          subject
+          expect(json['error']).to be_present
+          should have_http_status(422)
+        end
+      end
+    end
+  end
 end
