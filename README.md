@@ -135,3 +135,5 @@ Processing by Api::V1::CarsController#index as HTML
   ↳ app/controllers/api/v1/cars_controller.rb:9
 Completed 200 OK in 106ms (Views: 87.8ms | ActiveRecord: 3.2ms)
 ```
+
+- The `Filterable` module was inspired on Justin Weiss post [Search and Filter Rails Models Without Bloating Your Controller](https://www.justinweiss.com/articles/search-and-filter-rails-models-without-bloating-your-controller/), giving my personal touch/modification. 
