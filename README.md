@@ -30,6 +30,12 @@ gem 'simplecov' -- scopes: test
 
 ## Installing the application
 
+### Docker
+
+```
+docker-compose up
+```
+
 ### Locally
 
 #### Installing dependencies
@@ -62,12 +68,6 @@ rails db:seed
 
 ```
 rails s -p 3000 -b '0.0.0.0'
-```
-
-### Docker
-
-```
-docker-compose up
 ```
 
 ## Accessing the endpoints
