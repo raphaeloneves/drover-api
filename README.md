@@ -44,24 +44,10 @@ docker-compose up
 bundle install
 ```
 
-#### Installing the resources
-
-- Database creation
+#### Initializing the database
 
 ```
 rails db:setup
-```
-
-- Database migration
-
-```
-rails db:migrate
-```
-
-- Database seed
-
-```
-rails db:seed
 ```
 
 #### Initializing the application
