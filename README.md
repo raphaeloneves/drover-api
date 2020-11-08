@@ -119,13 +119,13 @@ After running the test suite, automatically a report containing the test coverag
 - Validation Support: under `spec/support/validation_support.rb`
 - Simplecov: under `spec/spec_helper.rb`
 
+## Important note (credits)
 
-## Notes
+- The `Filterable` module was inspired on Justin Weiss post [Search and Filter Rails Models Without Bloating Your Controller](https://www.justinweiss.com/articles/search-and-filter-rails-models-without-bloating-your-controller/), giving my personal touch/modification.
 
-- Minitest has been replaced by Rspec as test suite. The Rspec structure has been initialized with:
-```
-rails g rspec:install
-```
+## Feed for further discussion
+
+- Minitest has been replaced by Rspec as test suite.
 
 - Handled query n + 1 problems on makers, models and cars
 
@@ -136,4 +136,23 @@ Processing by Api::V1::CarsController#index as HTML
 Completed 200 OK in 106ms (Views: 87.8ms | ActiveRecord: 3.2ms)
 ```
 
-- The `Filterable` module was inspired on Justin Weiss post [Search and Filter Rails Models Without Bloating Your Controller](https://www.justinweiss.com/articles/search-and-filter-rails-models-without-bloating-your-controller/), giving my personal touch/modification. 
+- Centralized exception handler
+
+- Defensive programming
+
+- Shared examples (Rspec)
+
+- Docker support
+
+- Single responsibility priciple
+
+- Subscription price modeling
+
+- Global settings
+
+- Specs configuration organization
+
+- Validation
+
+
+ 
