@@ -8,7 +8,7 @@ module Sortable
 
   def sorting_by(sort_params)
     return public_send(DEFAULT_SORTING_METHOD) if sort_params[:sort].blank? &&
-                                                         respond_to?(DEFAULT_SORTING_METHOD)
+                                                  respond_to?(DEFAULT_SORTING_METHOD)
 
     method = "sorting_by_#{sort_params[:sort]}"
     public_send(method, sorting_direction(sort_params[:sort_dir])) if respond_to?(method)
