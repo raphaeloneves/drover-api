@@ -3,10 +3,12 @@ module Sortable
   extend ActiveSupport::Concern
 
   ALLOWED_DIRECTIONS = %w[asc desc].freeze
+  DEFAULT_SORTING_METHOD = 'sorting_default'
 
   def sorting_by(sort_params)
     result = where(nil)
-    return result.public_send('sorting_default') if sort_params[:sort].blank?
+    return result.public_send(DEFAULT_SORTING_METHOD) if sort_params[:sort].blank? &&
+                                                         result.respond_to?(DEFAULT_SORTING_METHOD)
 
     method = "sorting_by_#{sort_params[:sort]}"
     return result unless result.respond_to?(method)
