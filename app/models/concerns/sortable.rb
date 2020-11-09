@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Sortable
   extend ActiveSupport::Concern
 
@@ -6,14 +7,11 @@ module Sortable
   DEFAULT_SORTING_METHOD = 'sorting_default'
 
   def sorting_by(sort_params)
-    result = where(nil)
-    return result.public_send(DEFAULT_SORTING_METHOD) if sort_params[:sort].blank? &&
-                                                         result.respond_to?(DEFAULT_SORTING_METHOD)
+    return public_send(DEFAULT_SORTING_METHOD) if sort_params[:sort].blank? &&
+                                                         respond_to?(DEFAULT_SORTING_METHOD)
 
     method = "sorting_by_#{sort_params[:sort]}"
-    return result unless result.respond_to?(method)
-
-    result.public_send(method, sorting_direction(sort_params[:sort_dir]))
+    public_send(method, sorting_direction(sort_params[:sort_dir])) if respond_to?(method)
   end
 
   def sorting_direction(param_direction)
